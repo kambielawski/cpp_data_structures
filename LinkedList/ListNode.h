@@ -9,6 +9,7 @@ ListNode* m_next;
 
 public:
 ListNode(ItemType value);
+ListNode(ItemType value, ListNode<ItemType>* next);
 ~ListNode();
 ListNode<ItemType>* getNext();
 ItemType getValue();
@@ -21,6 +22,12 @@ template <typename ItemType>
 ListNode<ItemType>::ListNode(ItemType value){ 
   m_value = value;
   m_next = nullptr;
+}
+
+template <typename ItemType>
+ListNode<ItemType>::ListNode(ItemType value, ListNode<ItemType>* next) {
+  m_value = value;
+  m_next = next;
 }
 
 template <typename ItemType>
