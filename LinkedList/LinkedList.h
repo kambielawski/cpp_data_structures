@@ -17,8 +17,10 @@ LinkedList();
 bool isEmpty();
 void addFront(ItemType item);
 int length();
+ItemType getItemAtIndex(int index);
 
 };
+
 
 template <typename ItemType>
 LinkedList<ItemType>::LinkedList() {
@@ -30,6 +32,17 @@ LinkedList<ItemType>::LinkedList() {
 template <typename ItemType>
 LinkedList<ItemType>::~LinkedList() {
   while (this->isEmpty()) {
+    
+  }
+}
+
+template <typename ItemType>
+ItemType LinkedList<ItemType>::getItemAtIndex(int index){
+  int i = 0;
+  if (index > length - 1) {
+    throw runtime_error("List index out of range");
+  }
+  while (i < m_length && i < index) {
     
   }
 }
