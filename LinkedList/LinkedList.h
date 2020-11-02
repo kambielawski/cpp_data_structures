@@ -23,7 +23,9 @@ ItemType getItemAtIndex(int index);
 bool find(ItemType item);
 void print();
 void printReverseList();
-void printReverseList(ListNode<ItemType> *item);
+void printReverseList(ListNode<ItemType> *listItem);
+void deleteItem(ItemType item);
+void deleteItemAtIndex(int index);
 
 };
 
@@ -70,15 +72,56 @@ void LinkedList<ItemType>::print() {
 template <typename ItemType>
 void LinkedList<ItemType>::printReverseList() {
   std::cout << "Reversed list:";
-  this->printReverseList(m_head); 
+  if (m_head != nullptr)
+    this->printReverseList(m_head); 
   std::cout << "\n";
 }
 
 template <typename ItemType>
-void LinkedList<ItemType>::printReverseList(ListNode<ItemType> *item) {
-  if (item->getNext() != nullptr)
-    printReverseList(item->getNext());
-  std::cout << " " << item->getValue();
+void LinkedList<ItemType>::printReverseList(ListNode<ItemType> *listItem) {
+  if (listItem->getNext() != nullptr)
+    printReverseList(listItem->getNext());
+  std::cout << " " << listItem->getValue();
+}
+
+template <typename ItemType>
+void LinkedList<ItemType>::deleteItem(ItemType item) {
+  ListNode<ItemType> *temp = m_head;
+  ListNode<ItemType> *lastPrecursor = nullptr;
+  if (m_head != nullptr) {
+    while (temp != nullptr) {
+      if (temp->getValue() == item) {
+        lastPrecursor = temp;
+      }
+      temp = temp->getNext();
+    }
+  }
+}
+
+template <typename ItemType>
+void LinkedList<ItemType>::deleteItemAtIndex(int index){
+  if (index < 0 || index > m_length - 1)
+    throw std::runtime_error("List index out of range");
+
+  ListNode<ItemType> *temp = m_head;
+  ListNode<ItemType> *prev = NULL;
+  // delete m_head if index == 0
+  if (index == 0) {
+    m_head = m_head->getNext();
+    delete temp;
+    m_length--;
+    return;
+  }
+  int i = 0;
+  while (i < index) {
+    prev = temp; 
+    temp = temp->getNext();
+    i++;
+  }
+  // temp is now the immediate precursor to the item we want to delete
+  prev->setNext(temp->getNext());
+  m_length--;
+  delete temp;
 }
 
 template <typename ItemType>

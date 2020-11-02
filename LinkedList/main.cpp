@@ -13,6 +13,7 @@ int main() {
   cout << myList.length() << endl;
   cout << myList.find(8) << "\t" << myList.find(2) << endl;
   myList.print();
-  myList.printReverseList();
+  myList.deleteItemAtIndex(0);
+  myList.print();
   return 0;
 }
