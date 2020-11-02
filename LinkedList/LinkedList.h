@@ -4,6 +4,7 @@
 #define LINKED_LIST_H
 
 #include <stdexcept>
+#include <iostream>
 
 template <typename ItemType>
 class LinkedList {
@@ -19,9 +20,12 @@ bool isEmpty();
 void addFront(ItemType item);
 int length();
 ItemType getItemAtIndex(int index);
+bool find(ItemType item);
+void print();
+void printReverseList();
+void printReverseList(ListNode<ItemType> *item);
 
 };
-
 
 template <typename ItemType>
 LinkedList<ItemType>::LinkedList() {
@@ -35,6 +39,46 @@ LinkedList<ItemType>::~LinkedList() {
   while (this->isEmpty()) {
     
   }
+}
+
+template <typename ItemType>
+bool LinkedList<ItemType>::find(ItemType item) {
+  ListNode<ItemType> *temp = m_head;
+  for (int i = 0; i < m_length; i++) {
+    if (temp->getValue() == item) {
+      temp = nullptr;
+      return true;
+    }
+    temp = temp->getNext();
+  }
+  temp = nullptr;
+  return false;
+}
+
+template <typename ItemType>
+void LinkedList<ItemType>::print() {
+  ListNode<ItemType> *temp = m_head;
+  std::cout << "List: ";
+  for (int i = 0; i < m_length; i++) {
+    std::cout << temp->getValue() << " ";
+    temp = temp->getNext();
+  }
+  std::cout << "\n";
+  temp = nullptr;
+}
+
+template <typename ItemType>
+void LinkedList<ItemType>::printReverseList() {
+  std::cout << "Reversed list:";
+  this->printReverseList(m_head); 
+  std::cout << "\n";
+}
+
+template <typename ItemType>
+void LinkedList<ItemType>::printReverseList(ListNode<ItemType> *item) {
+  if (item->getNext() != nullptr)
+    printReverseList(item->getNext());
+  std::cout << " " << item->getValue();
 }
 
 template <typename ItemType>

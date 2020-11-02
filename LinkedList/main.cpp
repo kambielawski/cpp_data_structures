@@ -11,9 +11,8 @@ int main() {
   myList.addFront(8);
   myList.addFront(1);
   cout << myList.length() << endl;
-  cout << myList.getItemAtIndex(0) << endl;
-  cout << myList.getItemAtIndex(1) << endl;
-  cout << myList.getItemAtIndex(2) << endl;
-  cout << myList.getItemAtIndex(3) << endl;
+  cout << myList.find(8) << "\t" << myList.find(2) << endl;
+  myList.print();
+  myList.printReverseList();
   return 0;
 }
