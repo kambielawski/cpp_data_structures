@@ -3,6 +3,7 @@
 #ifndef LINKED_LIST_H
 #define LINKED_LIST_H
 
+#include <stdexcept>
 
 template <typename ItemType>
 class LinkedList {
@@ -38,13 +39,16 @@ LinkedList<ItemType>::~LinkedList() {
 
 template <typename ItemType>
 ItemType LinkedList<ItemType>::getItemAtIndex(int index){
+  if (index < 0 || index > m_length - 1) {
+    throw std::runtime_error("List index out of range");
+  }
+  ListNode<ItemType> *temp = m_head;
   int i = 0;
-  if (index > length - 1) {
-    throw runtime_error("List index out of range");
-  }
   while (i < m_length && i < index) {
-    
+    temp = temp->getNext(); 
+    i++;
   }
+  return temp->getValue();
 }
 
 template <typename ItemType>

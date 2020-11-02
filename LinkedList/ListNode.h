@@ -5,7 +5,7 @@ template <typename ItemType>
 class ListNode {
 private:
 ItemType m_value;
-ListNode* m_next;
+ListNode<ItemType>* m_next;
 
 public:
 ListNode(ItemType value);
@@ -38,7 +38,7 @@ ListNode<ItemType>::~ListNode() {
 
 template <typename ItemType>
 ListNode<ItemType>* ListNode<ItemType>::getNext() {
-  return *m_next;
+  return m_next;
 }
 
 
@@ -55,7 +55,7 @@ void ListNode<ItemType>::setValue(ItemType value) {
 
 
 template <typename ItemType>
-void ListNode<ItemType>::setNext(ListNode* next) {
+void ListNode<ItemType>::setNext(ListNode<ItemType>* next) {
   m_next = next;
 }
 
