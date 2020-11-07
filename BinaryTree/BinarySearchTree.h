@@ -16,7 +16,8 @@ BinarySearchTree();
 BinaryTreeNode<KeyType, ValueType> *getRoot();
 void insert(KeyType key, ValueType value);
 void insert(BinaryTreeNode<KeyType, ValueType> *newNode, BinaryTreeNode<KeyType, ValueType> *parent);
-ValueType find(KeyType key);
+int find(KeyType key);
+int find(BinaryTreeNode<KeyType, ValueType> *node, ValueType value);
 
 };
 
@@ -63,3 +64,23 @@ void BinarySearchTree<KeyType, ValueType>::insert(BinaryTreeNode<KeyType, ValueT
     }
   }
 }
+
+template <typename KeyType, typename ValueType>
+int BinarySearchTree<KeyType, ValueType>::find(KeyType key) {
+  if (m_root == nullptr) {
+    return 0;
+  } else {
+    return this->find(m_root, key);
+  }
+}
+
+template <typename KeyType, typename ValueType>
+int BinarySearchTree<KeyType, ValueType>::find(BinaryTreeNode<KeyType, ValueType> *node, ValueType value) {
+  if (node == nullptr) return 0;
+  
+  KeyType nodeValue = node->getKey();
+  if (nodeValue == value) return 1;
+  if (value > nodeValue) return this->find(node->getRightChild(), value);
+  return this->find(node->getLeftChild(), value);
+}
+
