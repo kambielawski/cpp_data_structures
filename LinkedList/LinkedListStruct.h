@@ -2,6 +2,7 @@
 #define LINKED_LIST_H
 
 #include <iostream>
+#include <stdexcept>
 
 template <typename ItemType>
 struct listNode {
@@ -25,6 +26,8 @@ LinkedList();
 
 void insertFront(ItemType item);
 void insertBack(ItemType item);
+void removeAtIndex(int index);
+int length() const;
 void printList() const;
 
 };
@@ -39,6 +42,35 @@ LinkedList<ItemType>::LinkedList() {
 template <typename ItemType>
 LinkedList<ItemType>::~LinkedList() {
   // delete list recursively
+}
+
+template <typename ItemType>
+int LinkedList<ItemType>::length() const {
+  return m_length;
+}
+
+template <typename ItemType>
+void LinkedList<ItemType>::removeAtIndex(int index) {
+  if (index < 0 || index > m_length-1) {
+    throw std::runtime_error("index out of range");
+  }
+  if (index == 0) {
+    delete m_head;
+    m_head = nullptr;
+  } else {
+    struct listNode<ItemType> *temp = m_head;
+    struct listNode<ItemType> *temp2;
+    int i = 0;
+    while (i < index-1) {
+      temp = temp->next;
+      i++;
+    }
+    temp2 = temp->next->next;
+    temp->next->next = nullptr;
+    delete temp->next;
+    temp->next = temp2;
+  }
+  m_length--;
 }
 
 template <typename ItemType>
