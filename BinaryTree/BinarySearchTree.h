@@ -30,7 +30,7 @@ BinarySearchTree<KeyType, ValueType>::BinarySearchTree() {
 
 template <typename KeyType, typename ValueType>
 BinarySearchTree<KeyType, ValueType>::~BinarySearchTree() {
-  // recursively delete nodes
+  // implement remove() first
 }
 
 template <typename KeyType, typename ValueType>

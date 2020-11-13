@@ -1,19 +1,16 @@
 #include <iostream>
 #include <string>
-#include "LinkedList.h"
+#include "LinkedListStruct.h"
 using namespace std;
 
 int main() {
-  LinkedList<int> myList;
-  cout << myList.length() << endl;
-  myList.addFront(5);
-  myList.addFront(3);
-  myList.addFront(8);
-  myList.addFront(1);
-  cout << myList.length() << endl;
-  cout << myList.find(8) << "\t" << myList.find(2) << endl;
-  myList.print();
-  myList.deleteItemAtIndex(0);
-  myList.print();
+  LinkedList<int> fart;
+  fart.insertFront(23);
+  fart.insertFront(24);
+  fart.insertFront(48); 
+  fart.insertBack(69);
+  fart.insertFront(42);
+  fart.removeAtIndex(2);
+  fart.printList();
   return 0;
 }
