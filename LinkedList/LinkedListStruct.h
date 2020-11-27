@@ -27,8 +27,14 @@ LinkedList();
 void insertFront(ItemType item);
 void insertBack(ItemType item);
 void removeAtIndex(int index);
+void removeItem(ItemType item);
 int length() const;
 void printList() const;
+void printListReverse() const;
+void printListReverse(listNode<ItemType> *node) const;
+bool find(ItemType item) const;
+ItemType getItemAtIndex(int index) const;
+bool isEmpty() const;
 
 };
 
@@ -41,7 +47,23 @@ LinkedList<ItemType>::LinkedList() {
 
 template <typename ItemType>
 LinkedList<ItemType>::~LinkedList() {
-  // delete list recursively
+  while (m_length > 0) {
+    removeAtIndex(m_length-1);
+  }
+}
+
+template <typename ItemType>
+void LinkedList<ItemType>::printListReverse() const {
+  printListReverse(m_head);
+  std::cout << "\n";
+}
+
+template <typename ItemType>
+void LinkedList<ItemType>::printListReverse(listNode<ItemType> *node) const {
+  if (node->next != nullptr) {
+    printListReverse(node->next);
+  }
+  std::cout << " " << node->item;
 }
 
 template <typename ItemType>
@@ -50,27 +72,56 @@ int LinkedList<ItemType>::length() const {
 }
 
 template <typename ItemType>
+bool LinkedList<ItemType>::isEmpty() const {
+  return m_length == 0;
+}
+
+template <typename ItemType>
 void LinkedList<ItemType>::removeAtIndex(int index) {
   if (index < 0 || index > m_length-1) {
     throw std::runtime_error("index out of range");
   }
   if (index == 0) {
-    delete m_head;
-    m_head = nullptr;
+    listNode<ItemType> *temp = m_head;
+    m_head = m_head->next;
+    temp->next = nullptr;
+    delete temp;
+    temp = nullptr;
   } else {
-    struct listNode<ItemType> *temp = m_head;
-    struct listNode<ItemType> *temp2;
+    listNode<ItemType> *temp = m_head;
+    listNode<ItemType> *prev;
     int i = 0;
     while (i < index-1) {
       temp = temp->next;
       i++;
     }
-    temp2 = temp->next->next;
+    prev = temp->next->next;
     temp->next->next = nullptr;
     delete temp->next;
-    temp->next = temp2;
+    temp->next = prev;
+    temp = nullptr;
+    prev = nullptr;
   }
   m_length--;
+}
+
+/* 
+This function assumes the item already exists in the list
+i.e. this->find() will already have occurred
+*/
+template <typename ItemType>
+void LinkedList<ItemType>::removeItem(ItemType item) {
+  listNode<ItemType> *temp = m_head;
+  int index = 0;
+  int indexOfItem = 0;
+  while (temp != nullptr) {
+    if (temp->item == item) {
+      indexOfItem = index;
+    }
+    temp = temp->next;
+    index++;
+  }
+  this->removeAtIndex(indexOfItem);
 }
 
 template <typename ItemType>
@@ -83,7 +134,22 @@ void LinkedList<ItemType>::insertFront(ItemType item) {
     temp->next = m_head;
   }
   m_head = temp;
+  temp = nullptr;
   m_length++;
+}
+
+template <typename ItemType>
+bool LinkedList<ItemType>::find(ItemType item) const {
+  listNode<ItemType> *temp = m_head;
+  while (temp != nullptr) {
+    if (temp->item == item) {
+      temp = nullptr;
+      return true;
+    }
+    temp = temp->next;
+  }
+  temp = nullptr;
+  return false;
 }
 
 template <typename ItemType>
@@ -104,12 +170,31 @@ void LinkedList<ItemType>::insertBack(ItemType item) {
 }
 
 template <typename ItemType>
+ItemType LinkedList<ItemType>::getItemAtIndex(int index) const {
+  if (index < 0 || index > m_length-1) 
+    throw std::runtime_error("list index out of range");
+
+  listNode<ItemType>* temp = m_head;
+  ItemType item;
+  int i = 0;
+
+  while (i < index) {
+    temp = temp->next;
+    i++;
+  }
+  item = temp->item;
+  temp = nullptr;
+  return item;
+}
+
+template <typename ItemType>
 void LinkedList<ItemType>::printList() const {
   struct listNode<ItemType> *temp = m_head;
   for (int i = 0; i < m_length; i++) {
-    std::cout << temp->item << std::endl;    
+    std::cout << temp->item << " ";    
     temp = temp->next;
   }
+  std::cout << "\n";
 }
 
 #endif
