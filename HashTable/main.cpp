@@ -1,23 +1,19 @@
-#include "ArrayDictionary.h"
-
-void changeLetters(char& prev) {
-  if (prev > 'c') {
-    prev = 'b';
-  } else {
-    prev = 'z';
-  }
-}
+#include <iostream>
+#include "HashTableSC.h"
+using namespace std;
 
 int main (int argc, char **argv) {
-  ArrayDictionary<int, char> adict;
+  HashTable<char> ht;
 
-  adict.add(4, 'a');
-  adict.add(7, 'b');
-  adict.add(23, 'd');
-  adict.add(1, 'j');
+  bool gotAdded = ht.add(69, 'a');
 
-  adict.traverse(changeLetters);
-  adict.printSequential();
+  cout << "shiz got added: " << gotAdded << endl;
+  cout << "shiz is contained: " << ht.contains(69, 'a') << endl;
+
+  bool gotRemoved = ht.remove(69, 'a');
+
+  cout << "shiz still contains?: " << ht.contains(69, 'a') << endl;
+  cout << "shiz is removed: " << gotRemoved << endl;
 
   return 0;
 }
